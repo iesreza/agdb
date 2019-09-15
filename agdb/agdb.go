@@ -197,7 +197,7 @@ func (agg *Aggregator) GetLast(keys []string) map[string]int64 {
 			res[key] += val
 		}
 	}
-
+	delete(res, "_AGTIME_")
 	return res
 }
 

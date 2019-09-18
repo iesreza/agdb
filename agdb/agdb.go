@@ -142,21 +142,26 @@ func (agg *Aggregator) Load(b []byte) error {
 	if len(agg.data) > 0 && agg.Resolution != Second {
 		last := agg.data[len(agg.data)-1]
 		t := time.Unix((*last)["_AGTIME_"], 0)
-		defer agg.rw.Unlock()
+
 		if agg.Resolution == Minute && (t.Minute() == now.Minute() && t.Hour() == now.Hour() && t.Day() == now.Day() && t.Month() == t.Month() && t.Year() == t.Year()) {
 			agg.current = last
+			agg.rw.Unlock()
 			return nil
 		} else if agg.Resolution == Hour && (t.Hour() == now.Hour() && t.Day() == now.Day() && t.Month() == t.Month() && t.Year() == t.Year()) {
 			agg.current = last
+			agg.rw.Unlock()
 			return nil
 		} else if agg.Resolution == Day && (t.Day() == now.Day() && t.Month() == t.Month() && t.Year() == t.Year()) {
 			agg.current = last
+			agg.rw.Unlock()
 			return nil
 		} else if agg.Resolution == Month && (t.Month() == t.Month() && t.Year() == t.Year()) {
 			agg.current = last
+			agg.rw.Unlock()
 			return nil
 		} else if agg.Resolution == Year && (t.Year() == t.Year()) {
 			agg.current = last
+			agg.rw.Unlock()
 			return nil
 		}
 
